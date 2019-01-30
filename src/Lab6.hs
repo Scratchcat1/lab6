@@ -33,7 +33,7 @@ runIdentity :: Identity a -> a
 runIdentity (Identity a) = a
 
 instance Functor Identity where
-    fmap = undefined
+    fmap f (Identity x) = Identity (f x)
 
 --------------------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ getConst :: Const v a -> v
 getConst (Const x) = x
 
 instance Functor (Const v) where
-    fmap = undefined
+    fmap f (Const x) = Const x
 
 --------------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ data Point a = Point a a
     deriving (Eq, Show)
 
 instance Functor Point where
-    fmap = undefined
+    fmap f (Point x y) = Point (f x) (f y)
 
 --------------------------------------------------------------------------------
 
