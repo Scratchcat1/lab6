@@ -63,7 +63,8 @@ data RoseTree a = Leaf a | Node [RoseTree a]
     deriving (Eq, Show)
 
 instance Functor RoseTree where
-    fmap = undefined
+    fmap f (Leaf x) = Leaf (f x)
+    fmap f (Node xs) = Node (map (fmap f) xs)
 
 --------------------------------------------------------------------------------
 
