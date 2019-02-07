@@ -73,7 +73,8 @@ data Compose f g a = Compose (f (g a))
     deriving (Eq, Show)
 
 instance (Functor f, Functor g) => Functor (Compose f g) where
-    fmap = undefined
+    fmap f (Compose x) = (Compose (fmap (fmap f) x))
+    -- applys fmap to all items in the first functor. The items are more functors so can have fmap applied to them.
 
 --------------------------------------------------------------------------------
 
@@ -92,11 +93,11 @@ fresh :: State Int Int
 fresh = St (\s -> (s,s+1))
 
 instance Functor (State s) where
-    fmap f (St m) = undefined
+    fmap f (St m) = St (\x -> (f (fst $ m x), snd $ m x))
 
 --------------------------------------------------------------------------------
 
 instance Functor ((->) r) where
-    fmap = undefined
+    fmap f g = (f . g)
 
 --------------------------------------------------------------------------------
